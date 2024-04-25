@@ -1,17 +1,14 @@
 # this script will iterate through all the files in the designated folder,
 # open each, remove any characters that are not ASCII, and then save the file
 # again. This can move through a dataset quickly, though it does mean that
-# some data is lost, such as words with ash symbols (the "ae" ligature) or
+# some data is lost, such as ash symbols (the "ae" ligature), smart quotes, some dashes, or
 # words with accented letters.
 
-# however, I still have further preprocessing to complete. I receive an error every
-# 20 files or so I receive this error like this, with different positions:
-# UnicodeDecodeError: 'ascii' codec can't decode byte 0xe2 in position 3524: ordinal not in range(128)
-# there is a character that was not handled well when the dataset was created, or more.
-# As a result, I need to cut-and-paste each file that fails when I run the program (it
-# is the last one printed) into the test.py file and search for the position that
-# caused the error. Then, I need to go into the file and delete the offending character.
-
+# however, there can still be errors in the dataset that requires further preprocessing.
+# i've included "print(file_path)" in the read_text_file() function, which prints the
+# name of each file as it is opened. if there is an error when a file opens,
+# you can correct this by opening the file in Notepad++ and going into the "encoding" tab
+# and converting the encoding to "utf-8".
 
 # to read multiple text files from a directory, from
 # https://www.geeksforgeeks.org/how-to-read-multiple-text-files-from-folder-in-python/
@@ -28,8 +25,8 @@ os.chdir(path)
 
 
 def read_text_file(file_path):
-    with open(file_path, 'r', encoding="ascii") as f:
-        print(file_path)
+    with open(file_path, 'r', encoding="utf-8") as f:
+        print(file_path) # print each file as it opens, in case there is an error
         content = f.read()
         text_before_processing = content
         # the .encode() method turns the string to bytes and ignores any characters
